@@ -1,0 +1,30 @@
+__pycache__/
+*.py[cod]
+*.pkl
+*.joblib
+*.npy
+*.npz
+.ipynb_checkpoints/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.DS_Store
+Thumbs.db
+
+# Local run outputs and real datasets
+runs/
+outputs/
+work/
+tmp/
+temp/
+*.xlsx
+*.xls
+*.parquet
+
+# Keep example data tracked.
+!examples/*.csv
+!examples/*.json
+
+# Local visual references may be copyrighted or project-specific.
+assets/reference-gallery/*
+!assets/reference-gallery/README.md

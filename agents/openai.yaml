@@ -1,0 +1,7 @@
+interface:
+  display_name: "ML-SHAP"
+  short_description: "Domain-aware, literature-backed ML-SHAP workflow."
+  default_prompt: "Use $ml-shap to identify my dataset's research domain, find the three closest recent papers, and build a domain-aware SHAP analysis workflow."
+
+policy:
+  allow_implicit_invocation: true

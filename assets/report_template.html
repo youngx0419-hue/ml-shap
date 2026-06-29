@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{title}</title>
+    <style>
+        :root { --primary:#2255a4; --secondary:#287c8e; --accent:#d9a441; --gray:#555; --light-bg:#f8f9fa; --border:#dee2e6; }
+        * { box-sizing:border-box; margin:0; padding:0; }
+        body { font-family:"Times New Roman", Georgia, serif; font-size:10pt; line-height:1.6; color:#333; max-width:210mm; margin:0 auto; padding:15mm 20mm; background:#fff; }
+        .cover { text-align:center; padding:56px 0 36px; border-bottom:3px solid var(--primary); margin-bottom:30px; }
+        .cover h1 { font-size:21pt; color:var(--primary); margin-bottom:8px; letter-spacing:0; }
+        .subtitle { font-size:11pt; color:var(--gray); margin-bottom:20px; }
+        .meta { font-size:9pt; color:#666; line-height:1.8; }
+        .summary { background:var(--light-bg); border-left:4px solid var(--primary); padding:14px 18px; margin-bottom:28px; }
+        .summary h2, section h2 { font-size:13pt; color:var(--primary); margin-bottom:10px; }
+        .key-metrics { display:grid; grid-template-columns:repeat(auto-fit,minmax(110px,1fr)); gap:12px; margin:12px 0; }
+        .metric { background:#fff; border:1px solid var(--border); border-radius:4px; padding:10px 12px; text-align:center; }
+        .metric .value { font-size:18pt; font-weight:bold; color:var(--primary); }
+        .metric .label { font-size:8pt; color:var(--gray); }
+        .toc { margin-bottom:28px; }
+        .toc ol { padding-left:20px; }
+        .toc li { padding:2px 0; font-size:9.5pt; color:var(--primary); }
+        section { margin-bottom:28px; page-break-inside:avoid; }
+        section h2 { border-bottom:1.5px solid var(--border); padding-bottom:4px; }
+        section h3 { font-size:10.5pt; color:#333; margin:14px 0 6px; }
+        table { width:100%; border-collapse:collapse; font-size:8.5pt; margin:12px 0; }
+        th { background:var(--primary); color:#fff; padding:6px 8px; text-align:left; font-weight:600; }
+        td { padding:5px 8px; border-bottom:1px solid var(--border); }
+        tr:nth-child(even) { background:var(--light-bg); }
+        .figure-container { margin:16px 0; text-align:center; }
+        .figure-container img { max-width:100%; height:auto; border:1px solid var(--border); border-radius:2px; }
+        .caption { font-size:8.5pt; color:var(--gray); margin-top:6px; text-align:left; }
+        .finding-item { padding:8px 12px; margin:6px 0; border-left:3px solid var(--accent); background:#fffbf0; }
+        .report-footer { margin-top:40px; padding-top:14px; border-top:1px solid var(--border); font-size:8pt; color:#888; text-align:center; }
+        @media print { body { padding:0; } .cover { padding:40px 0 30px; } section, .figure-container { page-break-inside:avoid; } }
+    </style>
+</head>
+<body>
+<div class="cover">
+    <h1>ML-SHAP Explainable Machine Learning Report</h1>
+    <div class="subtitle">Domain-aware, evidence-layered SHAP analysis</div>
+    <div class="meta">
+        <div>Dataset: {dataset_name}</div>
+        <div>Task type: {task_type}</div>
+        <div>Best model: {best_model_name}</div>
+        <div>Generated at: {timestamp}</div>
+        <div>Analysis stack: ML-SHAP + gradient boosting + SHAP</div>
+    </div>
+</div>
+<div class="summary">
+    <h2>Executive Summary</h2>
+    <div class="key-metrics">
+        <div class="metric"><div class="value">{cv_score}</div><div class="label">{cv_score_label}</div></div>
+        <div class="metric"><div class="value">{n_features}</div><div class="label">Features</div></div>
+        <div class="metric"><div class="value">{n_samples}</div><div class="label">Samples</div></div>
+        <div class="metric"><div class="value">{top1_feature}</div><div class="label">Top driver</div></div>
+    </div>
+    <p><strong>Core finding:</strong> {summary_text}</p>
+</div>
+<div class="toc">
+    <h2>Contents</h2>
+    <ol>
+        <li>Evidence and Method Decisions</li>
+        <li>Data Overview</li>
+        <li>Model Development</li>
+        <li>Model Evaluation</li>
+        <li>Global SHAP Interpretation</li>
+        <li>Feature-Level Analysis</li>
+        <li>Advanced SHAP Analysis</li>
+        {spatial_toc}
+        <li>Key Findings</li>
+        <li>Reproducibility and Audit</li>
+    </ol>
+</div>
+<section id="evidence"><h2>0. Evidence and Method Decisions</h2>{evidence_summary_content}{method_decision_content}</section>
+<section id="data-overview"><h2>1. Data Overview</h2>{data_overview_content}</section>
+<section id="model-development"><h2>2. Model Development</h2>{model_development_content}</section>
+<section id="model-evaluation"><h2>3. Model Evaluation</h2>{model_evaluation_content}</section>
+<section id="global-shap"><h2>4. Global SHAP Interpretation</h2>{global_shap_content}</section>
+<section id="feature-analysis"><h2>5. Feature-Level Analysis</h2>{feature_analysis_content}</section>
+<section id="advanced-shap"><h2>6. Advanced SHAP Analysis</h2>{advanced_shap_content}</section>
+{spatial_section}
+<section id="key-findings"><h2>{finding_section_num}. Key Findings - Top 10</h2>{key_findings_content}</section>
+<section id="reproducibility">
+    <h2>Reproducibility and Audit</h2>
+    {reproducibility_content}
+    {output_audit_content}
+    <h3>Figure Inventory</h3>{figure_inventory}
+    <h3>Data Table Inventory</h3>{table_inventory}
+    <h3>Reproduction Instructions</h3>
+    <p>All analyses were performed using XGBoost {xgb_version} and SHAP {shap_version}. Use the recorded random seed, package versions, dataset hash, and run-file hashes in <code>reproducibility_manifest.json</code> to reproduce the analysis.</p>
+</section>
+<div class="report-footer">Generated by ML-SHAP Analysis System - {timestamp}</div>
+</body>
+</html>
